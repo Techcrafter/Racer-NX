@@ -111,7 +111,6 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
           update = options.update,    // method to update game logic is provided by caller
           render = options.render,    // method to render the game is provided by caller
           step   = options.step,      // fixed frame step (1/fps) is specified by caller
-          stats  = options.stats,     // stats instance is provided by caller
           now    = null,
           last   = Util.timestamp(),
           dt     = 0,
@@ -126,12 +125,10 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
           update(step);
         }
         render();
-        stats.update();
         last = now;
         requestAnimationFrame(frame, canvas);
       }
       frame(); // lets get this party started
-      Game.playMusic();
     });
   },
 
@@ -171,49 +168,6 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
     };
     Dom.on(document, 'keydown', function(ev) { onkey(ev.keyCode, 'down'); } );
     Dom.on(document, 'keyup',   function(ev) { onkey(ev.keyCode, 'up');   } );
-  },
-
-  //---------------------------------------------------------------------------
-
-  stats: function(parentId, id) { // construct mr.doobs FPS counter - along with friendly good/bad/ok message box
-
-    var result = new Stats();
-    result.domElement.id = id || 'stats';
-    Dom.get(parentId).appendChild(result.domElement);
-
-    var msg = document.createElement('div');
-    msg.style.cssText = "border: 2px solid gray; padding: 5px; margin-top: 5px; text-align: left; font-size: 1.15em; text-align: right;";
-    msg.innerHTML = "Your canvas performance is ";
-    Dom.get(parentId).appendChild(msg);
-
-    var value = document.createElement('span');
-    value.innerHTML = "...";
-    msg.appendChild(value);
-
-    setInterval(function() {
-      var fps   = result.current();
-      var ok    = (fps > 50) ? 'good'  : (fps < 30) ? 'bad' : 'ok';
-      var color = (fps > 50) ? 'green' : (fps < 30) ? 'red' : 'gray';
-      value.innerHTML       = ok;
-      value.style.color     = color;
-      msg.style.borderColor = color;
-    }, 5000);
-    return result;
-  },
-
-  //---------------------------------------------------------------------------
-
-  playMusic: function() {
-    var music = Dom.get('music');
-    music.loop = true;
-    music.volume = 0.05; // shhhh! annoying music!
-    music.muted = (Dom.storage.muted === "true");
-    music.play();
-    Dom.toggleClassName('mute', 'on', music.muted);
-    Dom.on('mute', 'click', function() {
-      Dom.storage.muted = music.muted = !music.muted;
-      Dom.toggleClassName('mute', 'on', music.muted);
-    });
   }
 
 }

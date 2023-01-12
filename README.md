@@ -1,5 +1,9 @@
-Javascript Pseudo 3D Racer
-==========================
+Racer NX
+========
+
+An optimized version of 'Javascript Pseudo 3D Racer' by [jakesgordon](https://github.com/jakesgordon) for the NX handheld console. No need for custom firmware! Simply [enable the 'secret' browser](https://switchbru.com/dns) and navigate to 'https://techcrafter.github.io/Racer-NX'. If you like the game, you can add the URL to your favorite links for easier access.
+
+## [Original project](https://github.com/jakesgordon/javascript-racer)
 
 An Outrun-style pseudo-3d racing game in HTML5 and Javascript
 
